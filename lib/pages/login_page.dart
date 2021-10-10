@@ -1,3 +1,4 @@
+import 'package:chat_app/widgets/boton_azul_widget.dart';
 import 'package:chat_app/widgets/custom_input_widget.dart';
 import 'package:chat_app/widgets/label_widget.dart';
 import 'package:chat_app/widgets/logo_widget.dart';
@@ -58,6 +59,14 @@ class __FormState extends State<_Form> {
             textController: passCtrl,
             isPassword: true,
           ),
+
+          BotonAzul(
+            text: 'Ingrese',
+            onPressed:(){
+              print(emailCtrl.text);
+              print(passCtrl.text);
+            },
+          )
 
         ],
       ),
