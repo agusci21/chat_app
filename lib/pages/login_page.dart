@@ -1,4 +1,6 @@
 import 'package:chat_app/widgets/custom_input_widget.dart';
+import 'package:chat_app/widgets/label_widget.dart';
+import 'package:chat_app/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
 
 
@@ -12,36 +14,14 @@ class LoadingPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _Logo(),
+            Logo(),
             _Form(),
-            _Labels(),
+            Labels(),
             Text('Terminos y condiciones de uso', style: TextStyle(fontWeight: FontWeight.w400),)
           ],
         ),
       )
    );
-  }
-}
-
-class _Logo extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.only(top: 50),
-        width: 170,
-        child: Column(
-          children: [
-            Image(image: AssetImage('assets/tag-logo.png')),
-
-            SizedBox(height: 20,),
-
-            Text('Messenger',style: TextStyle(fontSize: 30),),
-          ],
-        ),
-      ),
-    );
   }
 }
 
@@ -54,6 +34,9 @@ class _Form extends StatefulWidget {
 
 class __FormState extends State<_Form> {
 
+  final emailCtrl = TextEditingController();
+  final passCtrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,8 +45,19 @@ class __FormState extends State<_Form> {
       child: Column(
         children: [
 
-          CustomInput(),
-          CustomInput(),
+          CustomInput(
+            icon: Icons.mail_outline,
+            placeholder: 'E-mail',
+            keyboardType: TextInputType.emailAddress,
+            textController: emailCtrl,
+          ),
+
+          CustomInput(
+            icon: Icons.lock_outline,
+            placeholder: 'Password',
+            textController: passCtrl,
+            isPassword: true,
+          ),
 
         ],
       ),
@@ -71,19 +65,5 @@ class __FormState extends State<_Form> {
   }
 }
 
-class _Labels extends StatelessWidget {
-  const _Labels({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-          children: [
-            Text('¿No Tienes Cuenta?', style: TextStyle(color: Colors.black54, fontSize: 15, fontWeight: FontWeight.w300)),
-            SizedBox(height: 10),
-            Text('Crea una ahora', style: TextStyle(color: Colors.blue[600], fontSize: 18, fontWeight: FontWeight.bold),)
-          ],
-      )
-    );
-  }
-}
+//Exportar logo y labels
