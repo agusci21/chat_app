@@ -5,21 +5,33 @@ import 'package:chat_app/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
 
 
-class LoadingPage extends StatelessWidget {
+class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffF2F2F2),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Logo(),
-            _Form(),
-            Labels(),
-            Text('Terminos y condiciones de uso', style: TextStyle(fontWeight: FontWeight.w400),)
-          ],
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.9,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Logo(titulo: 'Messanger',),
+                _Form(),
+
+                Labels(
+                  ruta: 'register', 
+                  texto: '¿No tienes Cuenta?',
+                   textoBoton: 'Crea una ahora'
+                ),
+                
+                Text('Terminos y condiciones de uso', style: TextStyle(fontWeight: FontWeight.w400),)
+              ],
+            ),
+          ),
         ),
       )
    );
@@ -75,4 +87,3 @@ class __FormState extends State<_Form> {
 }
 
 
-//Exportar logo y labels
