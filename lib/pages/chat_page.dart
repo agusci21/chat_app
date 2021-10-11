@@ -1,7 +1,19 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
+
+  @override
+  _ChatPageState createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+
+  final _textControler = TextEditingController();
+  final _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +60,7 @@ class ChatPage extends StatelessWidget {
 
             Container(
               color: Colors.white,
-              height: 100,
+              child: _inputChat(),
             )
 
           ],
@@ -56,4 +68,51 @@ class ChatPage extends StatelessWidget {
       ),
    );
   }
+
+  Widget _inputChat() => SafeArea(
+    child: Container(
+      margin: EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
+        children: [
+          Flexible(
+            child: TextField(
+              controller: _textControler,
+              onSubmitted: _handleSubmit,
+              onChanged: (String texto){
+                //TODO cuando postear
+              },
+              decoration: InputDecoration.collapsed(hintText: 'Enviar Mensaje'),
+              focusNode: _focusNode,
+            ),
+          ),
+
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 4),
+            child: Platform.isIOS 
+
+            ? CupertinoButton(
+              child: Text('Enviar'), 
+              onPressed: (){}
+            )
+
+            : Container(
+              margin: EdgeInsets.symmetric(horizontal: 4),
+              child: IconButton(
+                icon: Icon(Icons.send, color: Colors.blue.shade400,),
+                onPressed: (){},
+              ),
+            )
+          )
+
+        ],
+      ),
+    ),
+  );
+
+  _handleSubmit(text){
+    print(text);
+    _focusNode.requestFocus();
+    _textControler.clear();
+  }
+
 }
