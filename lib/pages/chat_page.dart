@@ -11,16 +11,16 @@ class ChatPage extends StatefulWidget {
   _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin{
 
   final _textControler = TextEditingController();
   final _focusNode = FocusNode();
 
   final List<ChatMessage> _messages = [
-    ChatMessage(text: 'Primer mensssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssaje', uid: '123',),
+    /*ChatMessage(text: 'Primer Mensaje', uid: '123',),
     ChatMessage(text: 'Segundo mensaje', uid: '15',),
     ChatMessage(text: 'Tercer mensaje', uid: '123',),
-    ChatMessage(text: 'Cuarto mensaje', uid: '25',),
+    ChatMessage(text: 'Cuarto mensaje', uid: '25',),*/
   ];
 
   bool _isWriting = false;
@@ -138,14 +138,33 @@ class _ChatPageState extends State<ChatPage> {
 
   _handleSubmit(String text){
 
+    if(text.length == 0) return;
+
     _focusNode.requestFocus();
     _textControler.clear();
 
-    final newMessage = ChatMessage(text: text, uid: '123',);
+    final newMessage = ChatMessage(
+      text: text, 
+      uid: '123',
+      animationController: AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 800)
+      ),
+    );
+    newMessage.animationController.forward();
     _messages.insert(0, newMessage);
     setState(() {
       _isWriting = false;
     });
+  }
+
+  @override
+  void dispose() {
+    //TODO off del socvket
+    _messages.forEach((element) {
+      element.animationController.dispose();
+    });
+    super.dispose();
   }
 
 }
