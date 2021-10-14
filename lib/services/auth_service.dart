@@ -10,8 +10,17 @@ import 'package:http/http.dart' as http;
 class AuthService with ChangeNotifier{
 
   late Usuario usuario;
+  bool _autenticando = false;
+
+  bool get autenticando => this._autenticando;
+  set autenticando (bool valor){
+    this._autenticando = valor;
+    notifyListeners();
+  }
 
   Future login (String email, String password)async{
+
+    this.autenticando = true;
 
     final data = {
       'email' : email,
@@ -30,6 +39,7 @@ class AuthService with ChangeNotifier{
       this.usuario = loginResponse.usuario;
       print(resp.body);
     }
+    this.autenticando = false;
   }
 
 }
