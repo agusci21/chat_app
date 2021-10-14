@@ -1,3 +1,4 @@
+import 'package:chat_app/helpers/mostrar_alerta_helper.dart';
 import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/boton_azul_widget.dart';
 import 'package:chat_app/widgets/custom_input_widget.dart';
@@ -79,9 +80,14 @@ class __FormState extends State<_Form> {
           BotonAzul(
             color: authService.autenticando ? Colors.grey : Colors.blue,
             text: authService.autenticando ? 'Cargando' : 'Ingrese',
-            onPressed:authService.autenticando ? null : (){
+            onPressed:authService.autenticando ? null : () async {
               FocusScope.of(context).unfocus();
-              authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
+              final bool loginOk = await authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
+              if(loginOk){
+
+              }else{
+                mostrarAlerta(context, 'Login incorrecto', 'Credenciales invalidas');
+              }
             },
           )
 
