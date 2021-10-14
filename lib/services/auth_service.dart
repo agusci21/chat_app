@@ -48,7 +48,9 @@ class AuthService with ChangeNotifier{
         'Content-Type' : 'application/json'
       }
     );
+
     print(resp.statusCode);
+
     if(resp.statusCode == 200){
       final loginResponse = loginResponseFromJson(resp.body);
       this.usuario = loginResponse.usuario;
@@ -64,6 +66,43 @@ class AuthService with ChangeNotifier{
       return false;
     }
     
+  }
+
+  Future register (String name, String email, String password)async{
+
+    this.autenticando = true;
+
+    final data = {
+      'nombre': name,
+      'email' : email,
+      'password' : password
+    };
+
+    final resp = await http.post(Uri.parse('${Environment.apiUrl}/login/new'),
+      body: jsonEncode(data),
+      headers: {
+        'Content-Type' : 'application/json'
+      }
+    );
+
+    print(resp.body);
+
+    if(resp.statusCode == 200){
+      final loginResponse = loginResponseFromJson(resp.body);
+      this.usuario = loginResponse.usuario;
+
+      await this._guardarToken(loginResponse.token);
+
+      print(resp.body);
+
+      this.autenticando = false;
+      return true;
+    }else{
+      final respBody = jsonDecode(resp.body);
+      this.autenticando = false;
+      return respBody['msg'];
+    }
+
   }
 
   Future _guardarToken(String token) async {
