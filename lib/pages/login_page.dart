@@ -1,8 +1,10 @@
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/boton_azul_widget.dart';
 import 'package:chat_app/widgets/custom_input_widget.dart';
 import 'package:chat_app/widgets/label_widget.dart';
 import 'package:chat_app/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class LoginPage extends StatelessWidget {
@@ -75,8 +77,8 @@ class __FormState extends State<_Form> {
           BotonAzul(
             text: 'Ingrese',
             onPressed:(){
-              print(emailCtrl.text);
-              print(passCtrl.text);
+              final authService = Provider.of<AuthService>(context, listen: false);
+              authService.login(emailCtrl.text, passCtrl.text);
             },
           )
 

@@ -161,9 +161,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin{
   @override
   void dispose() {
     //TODO off del socvket
-    _messages.forEach((element) {
-      element.animationController.dispose();
-    });
+    _messages.forEach((element) => element.animationController.dispose());
     super.dispose();
   }
 
