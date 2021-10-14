@@ -1,11 +1,15 @@
 import 'dart:convert';
 
 import 'package:chat_app/global/environment.dart';
+import 'package:chat_app/models/login_response_model.dart';
+import 'package:chat_app/models/usuario_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 
 class AuthService with ChangeNotifier{
+
+  late Usuario usuario;
 
   Future login (String email, String password)async{
 
@@ -20,7 +24,12 @@ class AuthService with ChangeNotifier{
         'Content-Type' : 'application/json'
       }
     );
-    print(resp.body);
+    print(resp.statusCode);
+    if(resp.statusCode == 200){
+      final loginResponse = loginResponseFromJson(resp.body);
+      this.usuario = loginResponse.usuario;
+      print(resp.body);
+    }
   }
 
 }
