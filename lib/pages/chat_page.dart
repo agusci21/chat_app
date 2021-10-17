@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:chat_app/services/chat_service.dart';
 import 'package:chat_app/widgets/chat_menssage_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class ChatPage extends StatefulWidget {
@@ -16,29 +18,44 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin{
   final _textControler = TextEditingController();
   final _focusNode = FocusNode();
 
-  final List<ChatMessage> _messages = [
-    /*ChatMessage(text: 'Primer Mensaje', uid: '123',),
-    ChatMessage(text: 'Segundo mensaje', uid: '15',),
-    ChatMessage(text: 'Tercer mensaje', uid: '123',),
-    ChatMessage(text: 'Cuarto mensaje', uid: '25',),*/
-  ];
+  final List<ChatMessage> _messages = [];
 
   bool _isWriting = false;
 
   @override
   Widget build(BuildContext context) {
+
+    final chatService = Provider.of<ChatService>(context);
+    final usuarioPara = chatService.usuarioPara; 
+
     return Scaffold(
 
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Column(
+        title: Container(
+          margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.1),
+          width: double.infinity,
+              child: Column(
+                children: [
+                  CircleAvatar(
+                  child: Text(usuarioPara.nombre.substring(0,2), style: TextStyle(fontSize: 12),),
+                  backgroundColor: Colors.blueAccent.shade100,
+                  maxRadius: 16,
+                  ),
+                  Text(usuarioPara.nombre, style: TextStyle(color: Colors.black87, fontSize: 12),)
+                ],
+              ),
+        ),
+          
+        
+        /*Column(
           children: [
 
             Row(
               children: [
                 Spacer(),
                 CircleAvatar(
-                  child: Text('Te', style: TextStyle(fontSize: 12),),
+                  child: Text(usuarioPara.nombre.substring(0,2), style: TextStyle(fontSize: 12),),
                   backgroundColor: Colors.blueAccent.shade100,
                   maxRadius: 16,
                 ),
@@ -49,7 +66,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin{
             SizedBox(height: 5,),
             Text('Agustin Cola', style: TextStyle(color: Colors.black87, fontSize: 12),)
           ],
-        ),
+        ),*/
       ),
 
       body: Container(
