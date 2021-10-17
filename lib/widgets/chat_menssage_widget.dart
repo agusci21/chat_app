@@ -1,4 +1,6 @@
+import 'package:chat_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatMessage extends StatelessWidget {
 
@@ -22,7 +24,7 @@ class ChatMessage extends StatelessWidget {
           curve: Curves.easeOut
         ),
         child: Container(
-          child: this.uid == '123'
+          child: this.uid == Provider.of<AuthService>(context, listen: false).usuario.uid
           ? _myMessage()
           : _notMyMessage(),
         ),
